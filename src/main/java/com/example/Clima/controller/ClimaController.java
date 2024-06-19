@@ -1,6 +1,7 @@
 package com.example.Clima.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import com.example.Clima.exception.InvalidDateException;
 import com.example.Clima.exception.TemperatureOutOfRangeException;
 import com.example.Clima.service.ClimaService;
 
+@CrossOrigin(origins = "*")
 @RestController
 public class ClimaController {
      @Autowired
