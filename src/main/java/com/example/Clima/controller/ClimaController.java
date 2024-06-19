@@ -1,10 +1,14 @@
 package com.example.Clima.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +20,9 @@ import com.example.Clima.exception.InvalidDateException;
 import com.example.Clima.exception.TemperatureOutOfRangeException;
 import com.example.Clima.service.ClimaService;
 
-@CrossOrigin(origins = "*")
 @RestController
 public class ClimaController {
-     @Autowired
+    @Autowired
     private ClimaService climaService;
 
     @GetMapping("/weather")
@@ -27,9 +30,24 @@ public class ClimaController {
         return climaService.getWeather(city, date);
     }
 
+    @GetMapping("/weathers")
+    public List<Clima> getAllWeather() {
+        return climaService.getAllWeather();
+    }
+
     @PostMapping("/weather")
     public Clima addWeather(@RequestBody Clima clima) {
         return climaService.addWeather(clima);
+    }
+
+    @PutMapping("/weather/{id}")
+    public Clima updateWeather(@PathVariable Long id, @RequestBody Clima clima) {
+        return climaService.updateWeather(id, clima);
+    }
+
+    @DeleteMapping("/weather/{id}")
+    public void deleteWeather(@PathVariable Long id) {
+        climaService.deleteWeather(id);
     }
 
     @ExceptionHandler(ClimaNotFoundException.class)

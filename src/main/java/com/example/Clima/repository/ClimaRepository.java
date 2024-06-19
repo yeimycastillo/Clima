@@ -29,9 +29,36 @@ public class ClimaRepository {
                 .findFirst();
     }
 
+    public List<Clima> findAll() {
+        return new ArrayList<>(weatherData);
+    }
+
     public Clima save(Clima clima) {
-        clima.setId(idCounter.incrementAndGet());
-        weatherData.add(clima);
+        if (clima.getId() == null) {
+            clima.setId(idCounter.incrementAndGet());
+            weatherData.add(clima);
+        } else {
+            Optional<Clima> existingWeatherOpt = findById(clima.getId());
+            if (existingWeatherOpt.isPresent()) {
+                Clima existingWeather = existingWeatherOpt.get();
+                existingWeather.setCity(clima.getCity());
+                existingWeather.setDate(clima.getDate());
+                existingWeather.setDescription(clima.getDescription());
+                existingWeather.setTemperature(clima.getTemperature());
+            } else {
+                weatherData.add(clima);
+            }
+        }
         return clima;
+    }
+
+    public Optional<Clima> findById(Long id) {
+        return weatherData.stream()
+                .filter(weather -> weather.getId().equals(id))
+                .findFirst();
+    }
+
+    public void delete(Clima clima) {
+        weatherData.remove(clima);
     }
 }
