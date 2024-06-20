@@ -27,7 +27,7 @@ jobs:
       run: mvn clean package
 
     - name: Build Docker image
-      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/spring-boot-weather-app:latest .
+      run: docker build -t ${{ secrets.DOCKER_USERNAME }}/weather-backend:latest .
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
@@ -36,4 +36,4 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Push Docker image
-      run: docker push ${{ secrets.DOCKER_USERNAME }}/spring-boot-weather-app:latest
+      run: docker push ${{ secrets.DOCKER_USERNAME }}/weather-backend:latest
