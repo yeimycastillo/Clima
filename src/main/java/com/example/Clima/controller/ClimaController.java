@@ -26,8 +26,19 @@ public class ClimaController {
     private ClimaService climaService;
 
     @GetMapping("/weather")
-    public Clima getWeather(@RequestParam String city, @RequestParam String date) {
-        return climaService.getWeather(city, date);
+    public List<Clima> getWeather(@RequestParam(required = false) String city, @RequestParam(required = false) String date) {
+        if(city != null && date != null){
+            return List.of(climaService.getWeather(city, date));
+        } else if (city != null){
+            return climaService.getWeatherByCity(city);
+        }
+        else if (date != null) {
+            return climaService.getWeatherByDate(date);
+        }
+        else{
+            return climaService.getAllWeather();
+        }
+        
     }
 
     @GetMapping("/weathers")

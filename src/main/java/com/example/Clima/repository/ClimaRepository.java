@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,18 @@ public class ClimaRepository {
         return weatherData.stream()
                 .filter(weather -> weather.getCity().equalsIgnoreCase(city) && weather.getDate().equals(date))
                 .findFirst();
+    }
+
+    public List<Clima> findByCity(String city) {
+        return weatherData.stream()
+            .filter(weather -> weather.getCity().equalsIgnoreCase(city))
+            .collect(Collectors.toList());
+    }
+
+    public List<Clima> findByDate(String date) {
+        return weatherData.stream()
+                          .filter(weather -> weather.getDate().equals(date))
+                          .collect(Collectors.toList());
     }
 
     public List<Clima> findAll() {

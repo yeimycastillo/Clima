@@ -30,6 +30,14 @@ public class ClimaService {
         return climaRepository.findAll();
     }
 
+    public List<Clima> getWeatherByCity(String city) {
+        return climaRepository.findByCity(city);
+    }
+
+    public List<Clima> getWeatherByDate(String date){
+        return climaRepository.findByDate(date);
+    }
+
     public Clima addWeather(Clima clima) {
         validateWeather(clima);
 
